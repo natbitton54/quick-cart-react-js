@@ -73,14 +73,15 @@ export default function Home() {
     fetchLowestResaleProducts();
   }, []);
 
-   const handleAddToCart = (product) => { 
-    if(!isLoggedIn){
-      toast.error("Please log in or sign-up to add items to the cart.")
-      navigate('/login')
-    } else{
-      dispatch(addToCart(product))
+const handleAddToCart = (product) => {
+    if (!currentUser) {
+      toast.error("Please log in to add items to the cart.");
+      navigate('/login');
+    } else {
+      dispatch(addToCart(product));
+      toast.success("Item added to cart!");
     }
-  }
+  };
 
   useEffect(() => {
     document.title = "QuickCart"
