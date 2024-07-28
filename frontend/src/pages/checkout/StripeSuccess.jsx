@@ -26,7 +26,7 @@ export default function StripeSuccess() {
         setOrderDetails({ orderNumber: data.orderNumber, totalAmount: data.totalAmount, delivery: data.delivery })
 
         // clear cart after successful payment
-        await fetch('http://localhost:3000/api/clear-cart', {
+        await fetch('https://quick-cart-react-js-server.vercel.app/api/clear-cart', {
           method: 'POST'
         })
         dispatch(clearCart())
