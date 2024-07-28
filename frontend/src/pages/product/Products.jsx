@@ -15,6 +15,7 @@ import adidasLogo from '../../assets/brands/adidas.png';
 import newBalanceLogo from '../../assets/brands/newBalance.png';
 import pumaLogo from '../../assets/brands/puma.png';
 import reebokLogo from '../../assets/brands/rebook.png';
+import { useAuth } from '../auth/firebase.js';
 
 export default function Products() {
   const [productsByBrand, setProductsByBrand] = useState({
@@ -24,17 +25,17 @@ export default function Products() {
     Reebok: [],
     NewBalance: []
   });
-  
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const { currentUser } = useAuth();
 
-  const handleAddToCart = (product) => {
-    if (!isLoggedIn) {
-      toast.error("Please log in or sign-up to add items to the cart.");
+const handleAddToCart = (product) => {
+    if (!currentUser) {
+      toast.error("Please log in to add items to the cart.");
       navigate('/login');
     } else {
       dispatch(addToCart(product));
+      toast.success("Item added to cart!");
     }
   };
 
