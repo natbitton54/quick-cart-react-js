@@ -7,6 +7,7 @@ import './Navbar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/actions/cartActions';
 import {toast} from 'react-toastify'
+import { useAuth } from '../pages/auth/firebase.js';
 
 export const ExpandableSearchBar = () => {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -16,8 +17,8 @@ export const ExpandableSearchBar = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const searchContainerRef = useRef(null);
     const dispatch = useDispatch()
-    const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
     const navigate = useNavigate()
+    const { currentUser } = useAuth(); 
 
     // Toggle the expansion of the search bar
     const toggleExpand = () => {
