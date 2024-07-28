@@ -35,7 +35,7 @@ export default function Products() {
     const fetchProductsByBrand = async () => {
       try {
         const responses = await Promise.all(brands.map(brand =>
-          axios.get(`http://localhost:3000/api/highestResaleByBrand`, { params: { brand } })
+          axios.get(`https://quick-cart-react-js-server.vercel.app/api/highestResaleByBrand`, { params: { brand } })
         ));
         const newProductsByBrand = brands.reduce((acc, brand, index) => ({
           ...acc,
