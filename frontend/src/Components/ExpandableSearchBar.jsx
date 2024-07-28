@@ -46,7 +46,7 @@ export const ExpandableSearchBar = () => {
         if (searchQuery.trim() !== '') {
             const fetchSearchDetails = async () => {
                 try {
-                    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/search?query=${searchQuery}`);
+                    const res = await axios.get(`https://quick-cart-react-js-server.vercel.app/search?query=${searchQuery}`);
                     setSearchResults(res.data);
                     setErrorMessage('');
                 } catch (err) {
