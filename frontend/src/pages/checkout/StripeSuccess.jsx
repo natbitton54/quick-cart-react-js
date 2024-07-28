@@ -20,7 +20,7 @@ export default function StripeSuccess() {
       }
 
       try {
-        const res = await fetch(`http://localhost:3000/api/retrieve-checkout-session/${sessionId}`)
+        const res = await fetch(`https://quick-cart-react-js-server.vercel.app/api/retrieve-checkout-session/${sessionId}`)
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         const data = await res.json()
         setOrderDetails({ orderNumber: data.orderNumber, totalAmount: data.totalAmount, delivery: data.delivery })
