@@ -4,9 +4,11 @@ import storage from 'redux-persist/lib/storage';
 import sessionStorage from 'redux-persist/lib/storage/session';
 import {thunk} from 'redux-thunk';
 import cartReducer from './reducers/cartReducer';
+import authReducer from './reducers/authReducer.js';
 
 const rootReducer = combineReducers({
     cart: cartReducer,
+    auth: authReducer,
 });
 
 const rememberMe = localStorage.getItem('rememberMe') === 'true';
