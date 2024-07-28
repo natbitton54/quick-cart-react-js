@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './products.css';
 import '../../pages/home/home.css'
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/actions/cartActions.js';
 import { toast } from 'react-toastify';
 import Skeleton from 'react-loading-skeleton';
@@ -26,6 +26,17 @@ export default function Products() {
   });
   
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
+  const handleAddToCart = (product) => {
+    if (!isLoggedIn) {
+      toast.error("Please log in or sign-up to add items to the cart.");
+      navigate('/login');
+    } else {
+      dispatch(addToCart(product));
+    }
+  };
 
   useEffect(() => {
     document.title = "Products"
@@ -91,7 +102,7 @@ export default function Products() {
         </div>
         <p className='price-p'>${product.lowestResellPrice?.stockX}</p>
 
-        <button className="cart-btn" onClick={() => dispatch(addToCart(product))}>Add to Cart</button>
+        <button className="cart-btn" onClick={() => handleAddToCart(product)}>Add to Cart</button>
       </div>
     )) : <p>No products found.</p>;
   };
