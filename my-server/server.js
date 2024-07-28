@@ -43,8 +43,8 @@ app.post('/api/create-checkout', async (req, res) => {
             payment_method_types: ['card', 'klarna', 'affirm'],
             line_items,
             mode: 'payment',
-            success_url: `https://quick-cart-react-js-server.vercel.app/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: 'https://quick-cart-react-js-server.vercel.app/cart',
+            success_url: `https://quick-cart-react-js-server.vercel.app/api/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: 'https://quick-cart-react-js-server.vercel.app/api/cart',
             shipping_address_collection: {
                 allowed_countries: ['US', 'CA'], // Specify allowed countries
             },
