@@ -44,7 +44,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchMostPopularProducts() {
       try {
-        const res = await axios.get('http://localhost:3000/api/mostPopular');
+        const res = await axios.get('https://quick-cart-react-js-server.vercel.app/api/mostPopular');
         const filteredProducts = res.data.filter((_, index) => (
           index !== 6 && index !== 5 && index !== 8 && index !== 9
         ));
@@ -57,7 +57,7 @@ export default function Home() {
 
     async function fetchLowestResaleProducts() {
       try {
-        const res = await axios.get('http://localhost:3000/api/lowestResale');
+        const res = await axios.get('https://quick-cart-react-js-server.vercel.app/api/lowestResale');
         setLowestResaleProducts(res.data);
       } catch (err) {
         toast.error('Failed to fetch products with low resale prices');
