@@ -16,7 +16,7 @@ export default function Cart() {
     const stripe = await stripePromise;
 
     try {
-      const res = await fetch('http://localhost:3000/api/create-checkout', {
+      const res = await fetch('https://quick-cart-react-js-server.vercel.app/api/create-checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
