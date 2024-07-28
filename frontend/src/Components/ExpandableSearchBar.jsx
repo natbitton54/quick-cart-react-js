@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/actions/cartActions';
+import {toast} from 'react-toastify'
 
 export const ExpandableSearchBar = () => {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -15,6 +16,8 @@ export const ExpandableSearchBar = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const searchContainerRef = useRef(null);
     const dispatch = useDispatch()
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+    const navigate = useNavigate()
 
     // Toggle the expansion of the search bar
     const toggleExpand = () => {
@@ -46,7 +49,7 @@ export const ExpandableSearchBar = () => {
         if (searchQuery.trim() !== '') {
             const fetchSearchDetails = async () => {
                 try {
-                    const res = await axios.get(`https://quick-cart-react-js-server.vercel.app/api/search?query=${searchQuery}`);
+                    const res = await axios.get(`http://localhost:3000/api/search?query=${searchQuery}`);
                     setSearchResults(res.data);
                     setErrorMessage('');
                 } catch (err) {
@@ -86,9 +89,14 @@ export const ExpandableSearchBar = () => {
     }, [isExpanded]);
 
     const handleAddToCart = (product) => {
-        dispatch(addToCart(product))
+        if(!isLoggedIn){
+            toast.error("Please log in or sign-up to add items to the cart.");
+            navigate('/login');
+        }else{
+            dispatch(handleAddToCart(product))
+        }
     }
-
+    
     return (
         <div
             ref={searchContainerRef}
