@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../../redux/actions/cartActions.js';
 
 import 'swiper/swiper-bundle.css';
@@ -34,7 +35,9 @@ import Skeleton from 'react-loading-skeleton';
 export default function Home() {
   const [bestSellingProducts, setBestSellingProducts] = useState([]);
   const [lowestResaleProducts, setLowestResaleProducts] = useState([]);
-  const dispatch = useDispatch()
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function removeYearFromShoeName(shoeName) {
     // Regex to remove multiple years and other edge cases at the end of the string
@@ -69,8 +72,13 @@ export default function Home() {
     fetchLowestResaleProducts();
   }, []);
 
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product))
+   const handleAddToCart = (product) => { 
+    if(!isLoggedIn){
+      toast.error("Please log in or sign-up to add items to the cart.")
+      navigate('/login')
+    } else{
+      dispatch(addToCart(product))
+    }
   }
 
   useEffect(() => {
