@@ -8,7 +8,6 @@ import authReducer from './reducers/authReducer.js';
 
 const rootReducer = combineReducers({
     cart: cartReducer,
-    auth: authReducer,
 });
 
 const rememberMe = localStorage.getItem('rememberMe') === 'true';
