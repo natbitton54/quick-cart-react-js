@@ -46,7 +46,7 @@ export const ExpandableSearchBar = () => {
         if (searchQuery.trim() !== '') {
             const fetchSearchDetails = async () => {
                 try {
-                    const res = await axios.get(`http://localhost:3000/api/search?query=${searchQuery}`);
+                    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/search?query=${searchQuery}`);
                     setSearchResults(res.data);
                     setErrorMessage('');
                 } catch (err) {

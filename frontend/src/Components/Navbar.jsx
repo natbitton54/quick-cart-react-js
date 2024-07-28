@@ -37,12 +37,6 @@ export default function Navbar() {
     };
 
     useEffect(() => {
-      const handleOutsideClick = (e) => {
-        if(dropdownOpen && dropdownRef.current && !dropdownRef.current.contains(e.target)){
-            setDropdownOpen(false)
-        }
-      }
-
         const handleScroll = () => {
             if (dropdownOpen && dropdownRef.current) {
                 setDropdownOpen(false)
@@ -53,10 +47,8 @@ export default function Navbar() {
             window.addEventListener('scroll', handleScroll);
         }
 
-      document.addEventListener('mousedown', handleOutsideClick)
 
       return () => {
-        document.removeEventListener('mousedown', handleOutsideClick)
           window.removeEventListener('scroll', handleScroll);
       }
     }, [dropdownOpen])

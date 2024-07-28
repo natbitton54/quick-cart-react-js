@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-const sendEmail = require('./SendEmail')
+const sendEmail = require('./send-email')
 const SneaksAPI = require('sneaks-api')
 const sneaks = new SneaksAPI()
 const { toast } = require('react-toastify')

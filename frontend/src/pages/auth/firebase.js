@@ -60,6 +60,7 @@ const logout = async () => {
 
     await signOut(auth);
 };
+
 const resetPassword = (email) => {
     return sendPasswordResetEmail(auth, email);
 };
