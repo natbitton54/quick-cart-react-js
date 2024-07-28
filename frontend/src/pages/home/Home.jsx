@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../../redux/actions/cartActions.js';
 
@@ -31,13 +31,14 @@ import 'swiper/css/autoplay';
 // import skeleton loader css
 import 'react-loading-skeleton/dist/skeleton.css';
 import Skeleton from 'react-loading-skeleton';
+import { useAuth } from '../auth/firebase.js';
 
 export default function Home() {
   const [bestSellingProducts, setBestSellingProducts] = useState([]);
   const [lowestResaleProducts, setLowestResaleProducts] = useState([]);
-  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { currentUser } = useAuth(); 
 
   function removeYearFromShoeName(shoeName) {
     // Regex to remove multiple years and other edge cases at the end of the string
