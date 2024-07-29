@@ -627,37 +627,51 @@ img.product-thumb {
     left: 0;
 }
 
-@media screen and (max-width: 980px){
+@media screen and (max-width: 980px) {
+    .slider .text-content {
+        position: absolute;
+        top: 84%;
+        left: 50%;
+        transform: translate(-50%, -60%);
+        width: 100%;
+        /* Restrict the width to prevent overflow */
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent background */
+        border-radius: 5px;
+        height: 175px
+    }
+
     .slider .item {
-            height: 700px;
-            /* Adjust height for smaller screens */
-        }
-    
-        .slider .item::before {
-            width: 300px;
-            /* Smaller width for the blurred background */
-            height: 200px;
-            /* Smaller height for the blurred background */
-            filter: blur(60px);
-        }
-    
-        .slider .text-content {
-            padding: 0 8%;
-            /* Smaller padding */
-            font-size: 0.8rem;
-            /* Smaller font size for text */
-        }
-    
-        .slider .text-content {
-            position: absolute;
-            top: 84%;
-            left: 50%;
-        }
-    
-        .slider h4 {
-            font-size: 18px;
-            /* Smaller font size for h4 */
-        }
+        height: 600px;
+        /* Adjust height for smaller screens */
+    }
+
+    .slider .item::before {
+        width: 300px;
+        /* Smaller width for the blurred background */
+        height: 200px;
+        /* Smaller height for the blurred background */
+        filter: blur(60px);
+    }
+
+    .slider .text-content {
+        padding: 0 8%;
+        /* Smaller padding */
+        font-size: 0.8rem;
+        /* Smaller font size for text */
+    }
+
+    .slider .text-content {
+        position: absolute;
+        top: 84%;
+        left: 50%;
+    }
+
+    .slider h4 {
+        font-size: 18px;
+        /* Smaller font size for h4 */
+    }
 }
 
 /* media queries section for mobile view  */
@@ -691,22 +705,14 @@ img.product-thumb {
         align-items: center;
     }
 
-        .product-thumb {
-            width: 270px;
-        }
+    .product-thumb {
+        width: 270px;
+    }
 }
 
 @media screen and (max-width: 768px) {
-    .card-layout {
-        grid-template-columns: 1fr;
-        width: 78%;
-        margin: auto;
-        margin-bottom: 20px;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    .slider .item {
+        height: 660px;
     }
 
     .card {
@@ -723,10 +729,14 @@ img.product-thumb {
         height: auto;
         /* Maintain aspect ratio */
     }
-    
+
 }
 
 @media screen and (max-width: 616px) {
+    .slider .item {
+        height: 600px;
+    }
+
     .product-thumb {
         width: 250px;
     }
@@ -734,23 +744,8 @@ img.product-thumb {
 
 @media screen and (max-width: 480px) {
     .slider .item {
-        height: auto;
-        /* Make the height auto to maintain aspect ratio */
-        min-height: 300px;
+        height: 580px;
         /* Minimum height to ensure visibility */
-    }
-
-    .slider .text-content {
-        position: absolute;
-        top: 84%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 85%;
-        /* Restrict the width to prevent overflow */
-        padding: 10px;
-        background-color: rgba(0, 0, 0, 0.5);
-        /* Semi-transparent background */
-        border-radius: 5px;
     }
 
     .slider h4,
@@ -774,7 +769,7 @@ img.product-thumb {
         padding: 5px;
     }
 
-    .card-btn{
+    .card-btn {
         margin: 0;
     }
 }
@@ -788,6 +783,14 @@ img.product-thumb {
 }
 
 @media screen and (max-width: 360px) {
+    .banner-img {
+        max-height: 380px;
+        width: 100%;
+    }
+
+    .slider .item::before {
+        filter: blur(200px);
+    }
 
     p,
     small {
@@ -799,10 +802,15 @@ img.product-thumb {
         flex-direction: column;
     }
 
-
     .slider .text-content {
-        font-size: 0.7rem;
-        /* Even smaller font size for the smallest screens */
+        position: absolute;
+        background: #000;
+        top: 83.5%;
+        left: 50%;
+    }
+
+    .slider {
+        background-color: #000;
     }
 
     .slider h4 {
@@ -824,7 +832,7 @@ img.product-thumb {
     }
 
     .product-thumb {
-        width: 130px;
+        width: 138px;
     }
 
     .card-desc {
