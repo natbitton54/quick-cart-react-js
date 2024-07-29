@@ -101,7 +101,7 @@ const handleAddToCart = (product) => {
           {[slide1, slide2, slide3].map((slide, index) => (
             <SwiperSlide key={index}>
               <div className="item">
-                <img src={slide} alt={`Slide ${index + 1}`} style={{ height: '720px', width: '100%' }} />
+                <img src={slide} alt={`Slide ${index + 1}`} style={{ height: '700px', width: '100%' }} className='banner-img'/>
                 <div className="text-content">
                   <h4>{['Step Up Your Style', 'Runway Ready', 'Classic Charm'][index]}</h4>
                   <h2>{['Find Your Perfect Pair', 'Elevate Your Game', 'Timeless Elegance'][index]} <br /> {['Exquisite Footwear Awaits', 'With a wide variety of shoes', 'Meet Modern Comfort'][index]}</h2>
