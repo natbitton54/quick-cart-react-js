@@ -2,25 +2,30 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/actions/cartActions';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify';
 import { useAuth } from '../pages/auth/firebase.js';
 
-export const ExpandableSearchBar = () => {
+export const ExpandableSearchBar = ({ onSearch }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 980);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 1050);
     const [searchResults, setSearchResults] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const searchContainerRef = useRef(null);
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const { currentUser } = useAuth(); 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { currentUser } = useAuth();
 
-    // Toggle the expansion of the search bar
+    useEffect(() => {
+        if (isMobile) {
+            setIsExpanded(true);
+        }
+    }, [isMobile]);
+
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
         if (!isExpanded) {
@@ -30,46 +35,41 @@ export const ExpandableSearchBar = () => {
         }
     };
 
-    // Handle input changes in the search field
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
+        fetchSearchDetails(e.target.value);  // Fetch results as user types
     };
 
-    // Adjust based on window size
+    const fetchSearchDetails = async (query) => {
+        if (query.trim() === '') {
+            setSearchResults([]);
+            return;
+        }
+
+        try {
+            const res = await axios.get(`http://localhost:3000/api/search?query=${query}`);
+            setSearchResults(res.data);
+            setErrorMessage('');
+            onSearch && onSearch();
+        } catch (err) {
+            if (err.response && err.response.data && err.response.data.error) {
+                setErrorMessage(err.response.data.error);
+            } else {
+                console.error('Error fetching search results:', err);
+                setErrorMessage('An error occurred while searching. Please try again.');
+            }
+        }
+    };
+
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth <= 980);
+            setIsMobile(window.innerWidth <= 1050);
         };
 
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Fetch search results when searchQuery changes
-    useEffect(() => {
-        if (searchQuery.trim() !== '') {
-            const fetchSearchDetails = async () => {
-                try {
-                    const res = await axios.get(`https://quick-cart-react-js-server.vercel.app/api/search?query=${searchQuery}`);
-                    setSearchResults(res.data);
-                    setErrorMessage('');
-                } catch (err) {
-                    if (err.response && err.response.data && err.response.data.error) {
-                        setErrorMessage(err.response.data.error);
-                    } else {
-                        console.error('Error fetching search results:', err);
-                        setErrorMessage('An error occurred while searching. Please try again.');
-                    }
-                }
-            };
-            fetchSearchDetails();
-        } else {
-            setSearchResults([]);
-            setErrorMessage('');
-        }
-    }, [searchQuery]);
-
-    // Handle clicks outside of the search bar
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
@@ -89,16 +89,16 @@ export const ExpandableSearchBar = () => {
         };
     }, [isExpanded]);
 
-  const handleAddToCart = (product) => {
-    if (!currentUser) {
-      toast.error("Please log in to add items to the cart.");
-      navigate('/login');
-    } else {
-      dispatch(addToCart(product));
-      toast.success("Item added to cart!");
-    }
-  };
-    
+    const handleAddToCart = (product) => {
+        if (!currentUser) {
+            toast.error("Please log in to add items to the cart.");
+            navigate('/login');
+        } else {
+            dispatch(addToCart(product));
+            toast.success("Item added to cart!");
+        }
+    };
+
     return (
         <div
             ref={searchContainerRef}
@@ -125,24 +125,30 @@ export const ExpandableSearchBar = () => {
             <FontAwesomeIcon
                 icon={faSearch}
                 style={isExpanded || isMobile ? { ...styles.icon, ...styles.leftIcon } : { ...styles.icon, color: '#fff' }}
-                onClick={!isExpanded ? toggleExpand : undefined}
+                onClick={async () => {
+                    if (!isExpanded) {
+                        toggleExpand();
+                    }
+                }}
                 aria-label='Expand search'
             />
             {isExpanded && searchResults.length > 0 && (
                 <div style={isMobile ? styles.mobileResultsContainer : styles.resultsContainer}>
                     {searchResults.map(product => (
-                        <div  key={product.styleID} style={styles.resultItem}>
+                        <div key={product.styleID} style={styles.resultItem}>
                             <img src={product.thumbnail} alt={product.shoeName} style={styles.resultImage} />
                             <div>
                                 <p style={styles.resultName}>{product.shoeName}</p>
                                 <p style={styles.resultBrand}>{product.brand}</p>
-                                <p style={styles.resultPrice}>${product.lowestResellPrice?.stockX}</p> 
+                                <p style={styles.resultPrice}>${product.lowestResellPrice?.stockX}</p>
                                 <button style={styles.button} onClick={() => handleAddToCart(product)}>Add to Cart</button>
-
                             </div>
                         </div>
                     ))}
                 </div>
+            )}
+            {errorMessage && (
+                <p style={{ color: 'red', marginTop: '10px' }}>{errorMessage}</p>
             )}
         </div>
     );
