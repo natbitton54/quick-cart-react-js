@@ -19,7 +19,7 @@ app.use(cors({
 }))
 
 // Route to handle sending email
-app.post('/send-email', sendEmail)
+app.post('/api/send-email', sendEmail);
 
 // Endpoint to create a Stripe Checkout session
 app.post('/api/create-checkout', async (req, res) => {
