@@ -18,8 +18,9 @@ app.use(cors({
     origin: '*'
 }))
 
+
 // Route to handle sending email
-app.post('/send-email', sendEmail);
+app.post('/send-email', sendEmail)
 
 // Endpoint to create a Stripe Checkout session
 app.post('/api/create-checkout', async (req, res) => {
@@ -43,8 +44,8 @@ app.post('/api/create-checkout', async (req, res) => {
             payment_method_types: ['card', 'klarna', 'affirm'],
             line_items,
             mode: 'payment',
-            success_url: 'https://quick-cart-react-js.vercel.app/success?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url: 'https://quick-cart-react-js.vercel.app/cart',
+            success_url: `http://localhost:3001/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: 'http://localhost:3001/cart',
             shipping_address_collection: {
                 allowed_countries: ['US', 'CA'], // Specify allowed countries
             },
@@ -241,7 +242,7 @@ app.get('/', (req, res) => {
     res.status(200).send('Welcome to QuickCart API!');
 });
 
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`)
 })
