@@ -2,19 +2,24 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 120px;
+    padding: 20px;
     background-color: #f9f9f9;
     margin-top: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding-top: 70px;
 }
 
 .success-message {
     text-align: center;
     margin-bottom: 30px;
+    width: 100%;
+    max-width: 600px;
 }
 
 .success-message h1 {
     color: #4caf50;
-    font-size: 2.5em;
+    font-size: 2em;
     margin-bottom: 10px;
 }
 
@@ -30,8 +35,10 @@
     background-color: #4caf50;
     color: #fff;
     text-decoration: none;
+    border: none;
     border-radius: 5px;
     font-size: 1.2em;
+    cursor: pointer;
 }
 
 .order-summary {
@@ -48,6 +55,20 @@
 }
 
 .order-summary p {
-    font-size: 1.1em;
+    font-size: .8em;
     margin: 5px 0;
+}
+
+@media (min-width: 600px) {
+    .success-container {
+        padding: 40px;
+    }
+
+    .success-message h1 {
+        font-size: 2.5em;
+    }
+
+    .order-summary p {
+        font-size: 1em;
+    }
 }
