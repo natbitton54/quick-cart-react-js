@@ -150,21 +150,18 @@ app.get('/api/search', async (req, res) => {
     const { query } = req.query;
     const allowedBrands = ['nike', 'puma', 'new balance', 'adidas', 'reebok'];
 
-    // Check if the query matches one of the allowed brands
-    if (!allowedBrands.includes(query.toLowerCase())) {
-        return res.status(400).json({ error: 'Search is restricted to the following brands: Nike, Puma, New Balance, Adidas, and Reebok.' });
-    }
+    // Allow search for both brand names and shoe names
+    const brandQuery = allowedBrands.includes(query.toLowerCase()) ? query : '';
 
     try {
-        sneaks.getProducts(query, 50, (err, products) => {
+        // Search by brand if brandQuery is not empty, otherwise search by shoe name
+        sneaks.getProducts(brandQuery || query, 50, (err, products) => {
             if (err) {
-                toast.error(`Error searching products: ${err.message}`);
                 return res.status(500).json({ error: `Error searching products: ${err.message}` });
             }
             res.json(products);
         });
     } catch (err) {
-        toast.error(`Server error: ${err.message}`);
         res.status(500).json({ error: `Server error: ${err.message}` });
     }
 });
