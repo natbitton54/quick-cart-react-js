@@ -772,6 +772,10 @@ img.product-thumb {
     .card-btn {
         margin: 0;
     }
+
+    .product-info{
+        margin-bottom: 3px;
+    }
 }
 
 @media screen and (max-width: 470px) {
