@@ -15,8 +15,8 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    document.title = "Contact Us"
-  }, [])
+    document.title = "Contact Us";
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,9 +26,9 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://quick-cart-react-js-server.vercel.app/api/send-email', formData);
-      setSent(true)
-      setTimeout(() => setSent(false), 3000)
+      await axios.post('https://quick-cart-react-js-server.vercel.app/send-email', formData);
+      setSent(true);
+      setTimeout(() => setSent(false), 3000);
 
       setFormData({
         firstName: '',
