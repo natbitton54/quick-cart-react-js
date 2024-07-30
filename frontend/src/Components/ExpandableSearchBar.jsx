@@ -47,7 +47,7 @@ export const ExpandableSearchBar = ({ onSearch }) => {
         }
 
         try {
-            const res = await axios.get(`http://localhost:3000/api/search?query=${query}`);
+            const res = await axios.get(`https://quick-cart-react-js-server.vercel.app/api/search?query=${query}`);
             setSearchResults(res.data);
             setErrorMessage('');
             onSearch && onSearch();
