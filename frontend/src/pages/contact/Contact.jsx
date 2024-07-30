@@ -26,9 +26,9 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://quick-cart-react-js-server.vercel.app/send-email', formData);
+      await axios.post('https://quick-cart-react-js-server.vercel.app/api/send-email', formData);
       setSent(true)
-      setTimeout(() => setSent(false), 3000 )
+      setTimeout(() => setSent(false), 3000)
 
       setFormData({
         firstName: '',
