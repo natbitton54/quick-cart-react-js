@@ -147,9 +147,6 @@ export const ExpandableSearchBar = ({ onSearch }) => {
                     ))}
                 </div>
             )}
-            {errorMessage && (
-                <p style={{ color: 'red', marginTop: '10px' }}>{errorMessage}</p>
-            )}
         </div>
     );
 };
